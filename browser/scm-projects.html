@@ -20,73 +20,73 @@
     <div id="Navbar"></div>
 
     <div class="row-fluid">
-      <h4>Information about all repositories</h4>
+      <h4>Information about all projects</h4>
     </div>
     <!-- info text -->
     <div id="info" class="row-fluid">
-      <div class="span5">Some charts and tables for top repositories in
+      <div class="span5">Some charts and tables for top projects in
         the project, and a summary of the evolution of their participation with
-        links to more detailed information per repository.</div>
+        links to more detailed information per project.</div>
       <div class="span7">
-        <!-- evolution #repositories -->
-        <i> <b>Active Repositories per month</b>
+        <!-- evolution #projects -->
+        <i> <b>Active Projects per month</b>
         </i>
         <div class="MetricsEvol" data-data-source="scm"
-          data-metrics="scm_repositories" data-legend="false"
+          data-metrics="scm_projects" data-legend="false"
           style="height: 80px;"></div>
       </div>
     </div>
     <!-- end info text -->
 
 
-    <!-- list of repositories -->
+    <!-- list of projects -->
     <div id="nav" class="row-fluid">
       <div class="FilterItemsNav" data-data-source="scm"
-        data-order-by="scm_commits" data-filter="repos" style="align: center"></div>
+        data-order-by="scm_commits" data-filter="projects" style="align: center"></div>
     </div>
-    <!-- end list of repositories -->
+    <!-- end list of projects -->
 
 
-    <!-- commits, authors repository -->
+    <!-- commits, merged project -->
     <div class="well">
       <div id="summary-static" class="row-fluid">
         <!-- commits -->
         <div class="span1"></div>
         <div class="span4">
-          <i> <b>Commits per repository (aggregated)</b>
+          <i> <b>Commits per project (aggregated)</b>
           </i>
           <div class="FilterItemsGlobal" data-data-source="scm"
-            data-metric="scm_commits" data-filter="repos"
-            data-legend-div="repos_legend" data-limit="10"
+            data-metric="scm_commits" data-filter="projects"
+            data-legend-div="projects_legend" data-limit="10"
             data-order-by="scm_commits"></div>
         </div>
         <!-- end commits -->
 
-        <div class="span2" id="repos_legend"></div>
+        <div class="span2" id="projects_legend"></div>
 
-        <!-- authors -->
+        <!-- merged -->
         <div class="span4">
-          <i> <b>Authors per repository (aggregated)</b>
+          <i> <b>Authors per project (aggregated)</b>
           </i>
           <div class="FilterItemsGlobal" data-data-source="scm"
-            data-metric="scm_authors" data-filter="repos" data-legend="false"
+            data-metric="scm_authors" data-filter="projects" data-legend="false"
             data-limit="10" data-order-by="scm_commits"></div>
         </div>
-        <!-- end authors -->
+        <!-- end merged -->
         <div class="span1"></div>
       </div>
     </div>
-    <!-- end commits, authors repository -->
+    <!-- end commits, merged project -->
 
     <div id="summary-static" class="row-fluid"></div>
 
-    <!-- commits per repository -->
+    <!-- commits per project -->
     <div id="list" class="row-fluid">
       <div class="FilterItemsMiniCharts" data-data-source="scm"
-        data-metrics="scm_commits,scm_authors" data-filter="repos"
-        data-order-by="scm_commits"></div>
+        data-metrics="scm_commits,scm_authors"
+        data-filter="projects"></div>
     </div>
-    <!-- end commits per repository -->
+    <!-- end commits per project -->
 
     <div class="row-fluid" style="margin-top: 10px;">
       <div class="span12">
