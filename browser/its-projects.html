@@ -31,8 +31,8 @@
         <!-- evolution #projects -->
         <i> <b>Active Projects per month</b>
         </i>
-        <div class="MetricsEvol" data-data-source="scm"
-          data-metrics="scm_projects" data-legend="false"
+        <div class="MetricsEvol" data-data-source="its"
+          data-metrics="its_projects" data-legend="false"
           style="height: 80px;"></div>
       </div>
     </div>
@@ -41,8 +41,8 @@
 
     <!-- list of projects -->
     <div id="nav" class="row-fluid">
-      <div class="FilterItemsNav" data-data-source="scm"
-        data-order-by="scm_commits" data-filter="projects" style="align: center"></div>
+      <div class="FilterItemsNav" data-data-source="its"
+        data-order-by="its_closed" data-filter="projects" style="align: center"></div>
     </div>
     <!-- end list of projects -->
 
@@ -55,10 +55,10 @@
         <div class="span4">
           <i> <b>Submitted per project (aggregated)</b>
           </i>
-          <div class="FilterItemsGlobal" data-data-source="scm"
-            data-metric="scm_commits" data-filter="projects"
+          <div class="FilterItemsGlobal" data-data-source="its"
+            data-metric="its_closed" data-filter="projects"
             data-legend-div="projects_legend" data-limit="10"
-            data-order-by="scm_commits"></div>
+            data-order-by="its_closed"></div>
         </div>
         <!-- end submitted -->
 
@@ -68,9 +68,9 @@
         <div class="span4">
           <i> <b>Senders per project (aggregated)</b>
           </i>
-          <div class="FilterItemsGlobal" data-data-source="scm"
-            data-metric="scm_authors" data-filter="projects" data-legend="false"
-            data-limit="10" data-order-by="scm_commits"></div>
+          <div class="FilterItemsGlobal" data-data-source="its"
+            data-metric="its_closers" data-filter="projects" data-legend="false"
+            data-limit="10" data-order-by="its_closed"></div>
         </div>
         <!-- end merged -->
         <div class="span1"></div>
@@ -82,8 +82,8 @@
 
     <!-- submitted per project -->
     <div id="list" class="row-fluid">
-      <div class="FilterItemsMiniCharts" data-data-source="scm"
-        data-metrics="scm_commits,scm_authors"
+      <div class="FilterItemsMiniCharts" data-data-source="its"
+        data-metrics="its_closed,its_closers"
         data-filter="projects"></div>
     </div>
     <!-- end submitted per project -->
