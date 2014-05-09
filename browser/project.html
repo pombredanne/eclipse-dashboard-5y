@@ -21,7 +21,7 @@
 
     <div class="row-fluid">
       <div class="span12">
-        <div class="FilterItemData"></div>
+        <div class="ProjectBreadcrumbs"></div>
       </div>
     </div>
 
@@ -31,42 +31,46 @@
       <div class="span12">
         <!-- scm -->
         <div class="row-fluid">
-          <div class="span3">
-            <div class="FilterItemSummary" data-data-source="scm"
-              data-filter="projects"></div>
+          <div class="span2">
+            <!--<div class="FilterItemSummary" data-data-source="scm"
+              data-filter="projects"></div>-->
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="scm"
-              data-metrics="scm_commits"
-              data-legend="true" data-filter="projects" data-frame-time="true"></div>
+              data-metrics="scm_commits" data-min="true"
+              data-filter="projects" data-frame-time="true"
+              data-light-style="true" style="height: 100px;"></div>
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="scm"
-              data-metrics="scm_authors" data-frame-time="true"
-              data-start="1362096000" data-legend="true" data-filter="projects"></div>
+              data-metrics="scm_authors" data-min="true" data-frame-time="true"
+              data-legend="true" data-filter="projects"
+              style="height: 100px;"></div>
           </div>
         </div>
         <!-- end scm-->
 
         <!-- its -->
         <div class="row-fluid">
-          <div class="span3">
-            <div class="FilterItemSummary" data-data-source="its"
-              data-filter="projects"></div>
+          <div class="span2">
+            <!--<div class="FilterItemSummary" data-data-source="its"
+              data-filter="projects"></div>-->
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="its"
-              data-metrics="its_closed"
-              data-legend="true" data-filter="projects" data-frame-time="true"></div>
+              data-metrics="its_closed" data-min="true"
+              data-legend="true" data-filter="projects" data-frame-time="true"
+              style="height: 100px;"></div>
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="its"
-              data-metrics="its_closers" data-frame-time="true"
-              data-start="1362096000" data-legend="true" data-filter="projects"></div>
+              data-metrics="its_closers" data-min="true" data-frame-time="true"
+              data-legend="true" data-filter="projects"
+              style="height: 100px;"></div>
           </div>
         </div>
         <!-- end its-->
@@ -74,21 +78,24 @@
 
         <!-- scr -->
         <div class="row-fluid">
-          <div class="span3">
-            <div class="FilterItemSummary" data-data-source="scr"
-              data-filter="projects"></div>
+          <div class="span2">
+            <!--<div class="FilterItemSummary" data-data-source="scr"
+              data-filter="projects"></div>-->
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="scr"
               data-metrics="scr_submitted,scr_merged,scr_abandoned"
-              data-legend="true" data-filter="projects" data-frame-time="true"></div>
+              data-legend="true" data-filter="projects" data-frame-time="true"
+              data-min="true" style="height: 100px;"
+              ></div>
           </div>
 
-          <div class="span4">
+          <div class="span5 wellmin">
             <div class="FilterItemMetricsEvol" data-data-source="scr"
               data-metrics="pending" data-frame-time="true"
-              data-start="1362096000" data-legend="true" data-filter="projects"></div>
+              data-legend="true" data-filter="projects"
+              data-min="true" style="height: 100px;"></div>
           </div>
         </div>
         <!-- end scr-->
