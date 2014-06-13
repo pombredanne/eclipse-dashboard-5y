@@ -343,6 +343,13 @@
         "name" : "Openers",
         "desc" : "Number of persons closing code review processes",
         "action" : "opened"
+    },    
+    "scr_submitters" : {
+        "divid" : "scr_submitters",
+        "column" : "submitters",
+        "name" : "Submitters",
+        "desc" : "Number of persons closing code review processes",
+        "action" : "submitted"
     }    
 }
 }
