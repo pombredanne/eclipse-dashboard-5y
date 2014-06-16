@@ -343,62 +343,13 @@
         "name" : "Openers",
         "desc" : "Number of persons closing code review processes",
         "action" : "opened"
-    },
+    },    
     "scr_submitters" : {
-         "divid" : "scr_submitters",
-         "column" : "submitters",
-         "name" : "Reviews submitters",
-         "desc" : "Number of people submitting review processes."
-     }
-},
-"qaforums": {
-    "qaforums_sent" : {
-        "name" : "Messages posted",
-        "desc" : "Number of messages posted to Q&A forums(s)",
-        "column" : "sent"
-    },
-    "qaforums_qsent" : {
-        "name" : "Questions posted",
-        "desc" : "Number of questions posted to Q&A forums(s)",
-        "column": "qsent"
-    },
-    "qaforums_asent" : {
-        "name" : "Answers posted",
-        "desc" : "Number of answers posted to Q&A forums(s)",
-        "column" : "asent"
-    },
-    "qaforums_senders" : {
-        "name" : "Persons posting messages",
-        "desc" : "Number of persons posting messages to Q&A forums(s)",
-        "column" : "senders"
-    },
-    "qaforums_asenders" : {
-        "name" : "Persons posting answers",
-        "desc" : "Number of persons answering in Q&A forums(s)",
-        "column" : "asenders"
-    },
-    "qaforums_qsenders" : {
-        "name" : "Persons posting questions",
-        "desc" : "Number of persons asking questions in Q&A forums(s)",
-        "column" : "qsenders"
-    }
-
-},
-"releases": {
-    "releases_authors":{
-        "name" : "Module authors",
-        "desc" : "Module authors",
-        "column": "authors"
-    },
-    "releases_modules":{
-        "name" : "Number of modules",
-        "desc" : "Number of modules",
-        "column": "Number of modules"
-    },
-    "releases_releases":{
-        "name" : "Number of module releases",
-        "desc" : "Number of module releases",
-        "column": "releases"
-    }
+        "divid" : "scr_submitters",
+        "column" : "submitters",
+        "name" : "Submitters",
+        "desc" : "Number of persons closing code review processes",
+        "action" : "submitted"
+    }    
 }
 }
