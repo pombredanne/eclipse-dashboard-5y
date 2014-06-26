@@ -39,8 +39,8 @@ var CompaniesTable = {};
 
     function display(div) { 
         html = "";
-        html += "<table class='table table-hover'>";
-        html += "<tr>";
+        html += "<table id='companies_activity' class='table table-hover'>";
+        html += "<thead>";
         // First columns should be pos, name
         total = activity['name'].length;
         html += "<th></th>";
@@ -50,6 +50,7 @@ var CompaniesTable = {};
 
             html += "<th>"+key+"</th>";
         });
+        html += "</thead>";
         var pos = 0;
         for (var i = 0; i<total; i++) {
             html += "<tr>";
@@ -65,6 +66,22 @@ var CompaniesTable = {};
 
         html += "</table>";
         $("#"+div).html(html);
+        // Adding sorting capability
+        // $("#companies_activity").tablesorter();
+        $("#companies_activity").tablesorter({
+            theme : 'blue',
+            // sortList : [[1,0],[2,0],[3,0]],
+            sortList : [[2,1]],
+            // header layout template; {icon} needed for some themes
+            headerTemplate : '{content}{icon}',
+            // initialize column styling of the table
+            widgets : ["columns"],
+            widgetOptions : {
+              // change the default column class names
+              // primary is the first column sorted, secondary is the second, etc
+              columns : [ "primary", "secondary", "tertiary" ]
+            }
+        });
     }
 
     CompaniesTable.display = function() {
