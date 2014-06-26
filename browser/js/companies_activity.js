@@ -41,17 +41,20 @@ var CompaniesTable = {};
         html = "";
         html += "<table class='table table-hover'>";
         html += "<tr>";
-        // First column should be the name
+        // First columns should be pos, name
         total = activity['name'].length;
+        html += "<th></th>";
         html += "<th>Affiliation</th>";
         $.each(activity, function(key, value) {
             if (key === "name") return;
 
             html += "<th>"+key+"</th>";
         });
+        var pos = 0;
         for (var i = 0; i<total; i++) {
             html += "<tr>";
             // First column should be the name
+            html += "<td>"+(++pos)+"</td>";
             html += "<td>"+activity['name'][i]+"</td>";
             $.each(activity, function(key, value) {
                 if (key === "name") return;
