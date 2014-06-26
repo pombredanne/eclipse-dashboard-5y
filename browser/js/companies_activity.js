@@ -26,15 +26,39 @@ var CompaniesTable = {};
 
 (function() {
 
-    function display(div) {
-        scm = Report.getDataSourceByName('scm');
-        companies = scm.getCompaniesData();
+    var activity_json = "data/json/scm-companies-activity.json";
+    var activity = null;
+
+    function loadActivity (cb) {
+        $.when($.getJSON(activity_json)
+            ).done(function(metrics) {
+                activity = metrics;
+                cb();
+        });
+    }
+
+    function display(div) { 
         html = "";
         html += "<table class='table table-hover'>";
-        html += "<tr><th>Company</th><th>Commits</th><th>Authors</th></tr>";
-        $.each(companies, function(key, value) {
-            html += "<tr><td>"+value+"</td><td>-</td><td>-</td></tr>";
+        html += "<tr>";
+        // First column should be the name
+        total = activity['name'].length;
+        html += "<th>Affiliation</th>";
+        $.each(activity, function(key, value) {
+            if (key === "name") return;
+
+            html += "<th>"+key+"</th>";
         });
+        for (var i = 0; i<total; i++) {
+            html += "<tr>";
+            // First column should be the name
+            html += "<td>"+activity['name'][i]+"</td>";
+            $.each(activity, function(key, value) {
+                if (key === "name") return;
+                html += "<td>"+value[i]+"</td>";
+            });
+            html += "</tr>";
+        }
 
         html += "</table>";
         $("#"+div).html(html);
@@ -53,7 +77,7 @@ var CompaniesTable = {};
     };
 
     CompaniesTable.build = function() {
-        CompaniesTable.display();
+        loadActivity(CompaniesTable.display);
     };
 })();
 
