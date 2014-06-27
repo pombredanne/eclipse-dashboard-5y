@@ -20,13 +20,20 @@
 <link rel="stylesheet" href="./css/awesome/css/font-awesome.min.css">
 
 <!--  table order -->
- <link rel="stylesheet" href="js/theme.bootstrap.css">
+<link rel="stylesheet" href="js/theme.bootstrap.css">
 
 <!-- <link rel="stylesheet" href="./js/theme.blue.css"> -->
 
 <!-- custom -->
 <!-- <link rel="stylesheet" href="VizGrimoireJS/custom.css">-->
 <link rel="stylesheet" type="text/css" id="theme" href="./css/vizgrimoire.css">
+<style>
+ul.dropdown-menu-form {
+	padding: 5px 10px 0;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+</style>
 </head>
 <body>
   <div id="Navbar"></div>
@@ -34,12 +41,44 @@
 
   <div class="container-fluid">
     <div class="row">
+
+      <div class="dropdown pull-left">
+        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+          Select year/s<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-form" role="menu">
+          <li><label class="checkbox"> <input type="checkbox">
+              2014
+          </label></li>
+          <li><label class="checkbox"> <input type="checkbox">
+              2013
+          </label></li>
+          <li><label class="checkbox"> <input type="checkbox">
+              2012
+          </label></li>
+        </ul>
+      </div>
+      <div class="dropdown pull-left">
+        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+          Select metrics<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-form" role="menu">
+          <li><label class="checkbox"> <input type="checkbox">
+              Commits
+          </label></li>
+          <li><label class="checkbox"> <input type="checkbox">
+              Authors
+          </label></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
       <div class="container alert alert-info">
         <button type="button" class="close" data-dismiss="alert"
           aria-hidden="true">&times;</button>
         <p>
           <i class="fa fa-icon fa-info-circle"></i> <strong>Companies
-            Commits History. Experimental page.
+            Commits History. Experimental page. 
         </p>
       </div>
     </div>
@@ -62,6 +101,16 @@
   <script src="./js/jquery.tablesorter.min.js"></script>
   <script src="./js/jquery.tablesorter.widgets.js"></script>
   <script src="./js/companies_activity.js"></script>
+
+  <script>
+    $('.dropdown-menu').on('click', function(e) {
+      if ($(this).hasClass('dropdown-menu-form')) {
+      e.stopPropagation();
+      }
+    });
+</script>
+
+
 </body>
 </html>
 
