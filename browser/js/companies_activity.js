@@ -66,20 +66,44 @@ var CompaniesTable = {};
 
         html += "</table>";
         $("#"+div).html(html);
-        // Adding sorting capability
-        // $("#companies_activity").tablesorter();
+        // Adding sorting capability for BS3
+        $.extend($.tablesorter.themes.bootstrap, {
+            // these classes are added to the table. To see other table classes available,
+            // look here: http://twitter.github.com/bootstrap/base-css.html#tables
+            table      : 'table table-bordered',
+            caption    : 'caption',
+            header     : 'bootstrap-header', // give the header a gradient background
+            footerRow  : '',
+            footerCells: '',
+            icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
+            sortNone   : 'bootstrap-icon-unsorted',
+            sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',     // includes classes for Bootstrap v2 & v3
+            sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down', // includes classes for Bootstrap v2 & v3
+            active     : '', // applied when column is sorted
+            hover      : '', // use custom css here - bootstrap class may not override it
+            filterRow  : '', // filter row class
+            even       : '', // odd row zebra striping
+            odd        : ''  // even row zebra striping
+        });
+
+        // call the tablesorter plugin and apply the uitheme widget
         $("#companies_activity").tablesorter({
-            theme : 'blue',
-            // sortList : [[1,0],[2,0],[3,0]],
-            sortList : [[2,1]],
-            // header layout template; {icon} needed for some themes
-            headerTemplate : '{content}{icon}',
-            // initialize column styling of the table
-            widgets : ["columns"],
+            // this will apply the bootstrap theme if "uitheme" widget is included
+            theme : "bootstrap",
+            widthFixed: true,
+            headerTemplate : '{content} {icon}', // new in v2.7. Needed to add the bootstrap icon!
+
+            // widget code contained in the jquery.tablesorter.widgets.js file
+            // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+            widgets : [ "uitheme", "filter", "zebra" ],
+
             widgetOptions : {
-              // change the default column class names
-              // primary is the first column sorted, secondary is the second, etc
-              columns : [ "primary", "secondary", "tertiary" ]
+                // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                // this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+                zebra : ["even", "odd"],
+
+                // reset filters button
+                filter_reset : ".reset"
             }
         });
     }
