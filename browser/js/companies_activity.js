@@ -37,8 +37,39 @@ var CompaniesTable = {};
         });
     }
 
+    function displaySelectors() {
+
+        selectors = "";
+        years = ['2014','2013','2012','all'];
+        metrics = ['commits','actions','authors'];
+
+        // Years selector
+        selectors += '<div class="dropdown pull-left">';
+        selectors += '<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">';
+        selectors += 'Select years<b class="caret"></b></a>';
+        selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
+        $.each(years, function(i, year) {
+            selectors += '<li><label class="checkbox"> <input type="checkbox">';
+            selectors += year + '</label></li>';
+        });
+        selectors += '</div>';
+
+        // Metrics selector
+        selectors += '<div class="dropdown pull-left">';
+        selectors += '<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">';
+        selectors += 'Select metrics<b class="caret"></b></a>';
+        selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
+        $.each(metrics, function(i, metric) {
+            selectors += '<li><label class="checkbox"> <input type="checkbox">';
+            selectors += metric + '</label></li>';
+        });
+        selectors += '</div>';
+        return selectors;
+    }
+
     function display(div) { 
-        html = "";
+        html = displaySelectors();
+        html += "<div>";
         html += "<table id='companies_activity' class='table table-hover'>";
         html += "<thead>";
         // First columns should be pos, name
@@ -65,6 +96,7 @@ var CompaniesTable = {};
         }
 
         html += "</table>";
+        html += "</div>";
         $("#"+div).html(html);
         // Adding sorting capability for BS3
         $.extend($.tablesorter.themes.bootstrap, {
@@ -118,6 +150,12 @@ var CompaniesTable = {};
                 display(div.id);
             });
         }
+        // Dropdown remains opened
+        $('.dropdown-menu').on('click', function(e) {
+            if ($(this).hasClass('dropdown-menu-form')) {
+            e.stopPropagation();
+            }
+        });
     };
 
     CompaniesTable.build = function() {
