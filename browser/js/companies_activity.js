@@ -30,7 +30,7 @@ var CompaniesActivity = {};
     var activity = null;
     var default_metrics = ['commits'];
     var default_years = ['all','2014'];
-
+    var table_id = "companies_activity";
 
     function loadActivity (cb) {
         $.when($.getJSON(activity_json)
@@ -41,11 +41,16 @@ var CompaniesActivity = {};
     }
 
     CompaniesActivity.selection = function(kind, item) {
-        var test = item;
+        var table = $("#"+table_id);
+        var div_parent = table.parent();
+        table.remove();
+        html = displayTable(table_id);
+        div_parent.append(html);
+        addTableSortable(table_id);
     };
 
     function displaySelectors() {
-        selectors = "";
+        selectors = "<form id='form_selectors'>\n";
         years = ['2014','2013','2012','all'];
         metrics = ['commits','actions','authors'];
 
@@ -53,7 +58,7 @@ var CompaniesActivity = {};
         selectors += '<div class="dropdown pull-left">';
         selectors += '<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">';
         selectors += 'Select years<b class="caret"></b></a>';
-        selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
+        selectors += '<ul id="selector_years" class="dropdown-menu dropdown-menu-form" role="menu">';
         $.each(years, function(i, year) {
             selectors += '<li><label class="checkbox">';
             selectors += '<input id="'+year+'_check" type="checkbox" ';
@@ -68,7 +73,7 @@ var CompaniesActivity = {};
         selectors += '<div class="dropdown pull-left">';
         selectors += '<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">';
         selectors += 'Select metrics<b class="caret"></b></a>';
-        selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
+        selectors += '<ul id="selector_metrics" class="dropdown-menu dropdown-menu-form" role="menu">';
         $.each(metrics, function(i, metric) {
             selectors += '<li><label class="checkbox">';
             selectors += '<input  id="'+metric+'_check" type="checkbox" ';
@@ -78,6 +83,7 @@ var CompaniesActivity = {};
             selectors += metric + '</label></li>';
         });
         selectors += '</div>\n';
+        selectors += '</form>\n';
         return selectors;
     }
 
@@ -124,19 +130,35 @@ var CompaniesActivity = {};
         });
     }
 
+    function getValuesSelector(selector) {
+        var values = [];
+
+        var elements = $("#"+selector+" :checkbox");
+        if (elements === null) return values;
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].checked === true) {
+                var value =  elements[i].id.split("_")[0];
+                values.push(value);
+            }
+        }
+        return values;
+    }
+
     function getActiveYears() {
-        return ['2014','2013'];
+        var years = getValuesSelector('selector_years');
+        return years;
     }
 
     function getActiveMetrics() {
-        return ['commits'];
+        var metrics = getValuesSelector('selector_metrics');
+        return metrics;
     }
 
 
     function displayTable(id) {
         years = getActiveYears();
         metrics = getActiveMetrics();
-        table = "<div>";
+        var table = "<div>";
         table += "<table id='"+id+"' class='table table-hover'>";
         table += "<thead>";
         // First columns should be pos, name
@@ -176,7 +198,6 @@ var CompaniesActivity = {};
     }
 
     function display(div) {
-        var table_id = "companies_activity";
         html = displaySelectors();
         html += displayTable(table_id);
         $("#"+div).html(html);
