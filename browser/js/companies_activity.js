@@ -156,8 +156,8 @@ var CompaniesActivity = {};
 
 
     function displayTable(id) {
-        years = getActiveYears();
-        metrics = getActiveMetrics();
+        var years = getActiveYears();
+        var metrics = getActiveMetrics();
         var table = "<div>";
         table += "<table id='"+id+"' class='table table-hover'>";
         table += "<thead>";
@@ -198,9 +198,10 @@ var CompaniesActivity = {};
     }
 
     function display(div) {
-        html = displaySelectors();
-        html += displayTable(table_id);
-        $("#"+div).html(html);
+        var selector  = displaySelectors();
+        $("#"+div).html(selector);
+        var table = displayTable(table_id);
+        $("#"+div).append(table);
         addTableSortable(table_id);
     }
 
