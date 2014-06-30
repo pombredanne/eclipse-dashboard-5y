@@ -22,12 +22,15 @@
  *
  */
 
-var CompaniesTable = {};
+var CompaniesActivity = {};
 
 (function() {
 
     var activity_json = "data/json/scm-companies-activity.json";
     var activity = null;
+    var default_metrics = ['commits'];
+    var default_years = ['all','2014'];
+
 
     function loadActivity (cb) {
         $.when($.getJSON(activity_json)
@@ -37,8 +40,11 @@ var CompaniesTable = {};
         });
     }
 
-    function displaySelectors() {
+    CompaniesActivity.selection = function(kind, item) {
+        var test = item;
+    };
 
+    function displaySelectors() {
         selectors = "";
         years = ['2014','2013','2012','all'];
         metrics = ['commits','actions','authors'];
@@ -49,10 +55,14 @@ var CompaniesTable = {};
         selectors += 'Select years<b class="caret"></b></a>';
         selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
         $.each(years, function(i, year) {
-            selectors += '<li><label class="checkbox"> <input type="checkbox">';
+            selectors += '<li><label class="checkbox">';
+            selectors += '<input id="'+year+'_check" type="checkbox" ';
+            selectors += 'onClick="CompaniesActivity.selection(\'years\',\''+year+'\');" ';
+            if ($.inArray(year, default_years)>-1) selectors += 'checked ';
+            selectors += '>';
             selectors += year + '</label></li>';
         });
-        selectors += '</div>';
+        selectors += '</div>\n';
 
         // Metrics selector
         selectors += '<div class="dropdown pull-left">';
@@ -60,44 +70,18 @@ var CompaniesTable = {};
         selectors += 'Select metrics<b class="caret"></b></a>';
         selectors += '<ul class="dropdown-menu dropdown-menu-form" role="menu">';
         $.each(metrics, function(i, metric) {
-            selectors += '<li><label class="checkbox"> <input type="checkbox">';
+            selectors += '<li><label class="checkbox">';
+            selectors += '<input  id="'+metric+'_check" type="checkbox" ';
+            selectors += 'onClick="CompaniesActivity.selection(\'metrics\',\''+metric+'\');" ';
+            if ($.inArray(metric, default_metrics)>-1) selectors += 'checked ';
+            selectors += '>';
             selectors += metric + '</label></li>';
         });
-        selectors += '</div>';
+        selectors += '</div>\n';
         return selectors;
     }
 
-    function display(div) { 
-        html = displaySelectors();
-        html += "<div>";
-        html += "<table id='companies_activity' class='table table-hover'>";
-        html += "<thead>";
-        // First columns should be pos, name
-        total = activity['name'].length;
-        html += "<th></th>";
-        html += "<th>Affiliation</th>";
-        $.each(activity, function(key, value) {
-            if (key === "name") return;
-
-            html += "<th>"+key+"</th>";
-        });
-        html += "</thead>";
-        var pos = 0;
-        for (var i = 0; i<total; i++) {
-            html += "<tr>";
-            // First column should be the name
-            html += "<td>"+(++pos)+"</td>";
-            html += "<td>"+activity['name'][i]+"</td>";
-            $.each(activity, function(key, value) {
-                if (key === "name") return;
-                html += "<td>"+value[i]+"</td>";
-            });
-            html += "</tr>";
-        }
-
-        html += "</table>";
-        html += "</div>";
-        $("#"+div).html(html);
+    function addTableSortable(id) {
         // Adding sorting capability for BS3
         $.extend($.tablesorter.themes.bootstrap, {
             // these classes are added to the table. To see other table classes available,
@@ -119,7 +103,7 @@ var CompaniesTable = {};
         });
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#companies_activity").tablesorter({
+        $("#"+id).tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             theme : "bootstrap",
             widthFixed: true,
@@ -140,8 +124,67 @@ var CompaniesTable = {};
         });
     }
 
-    CompaniesTable.display = function() {
-        var mark = "CompaniesTable";
+    function getActiveYears() {
+        return ['2014','2013'];
+    }
+
+    function getActiveMetrics() {
+        return ['commits'];
+    }
+
+
+    function displayTable(id) {
+        years = getActiveYears();
+        metrics = getActiveMetrics();
+        table = "<div>";
+        table += "<table id='"+id+"' class='table table-hover'>";
+        table += "<thead>";
+        // First columns should be pos, name
+        total = activity['name'].length;
+        table += "<th></th>";
+        table += "<th>Affiliation</th>";
+        $.each(activity, function(key, value) {
+            if (key === "name") return;
+            metric = key.split("_")[0];
+            year = key.split("_")[1];
+            if ($.inArray(metric, metrics)>-1 && 
+                $.inArray(year, years)>-1) {
+                table += "<th>"+key+"</th>";
+            }
+        });
+        table += "</thead>";
+        var pos = 0;
+        for (var i = 0; i<total; i++) {
+            table += "<tr>";
+            // First column should be pos, name
+            table += "<td>"+(++pos)+"</td>";
+            table += "<td>"+activity['name'][i]+"</td>";
+            $.each(activity, function(key, value) {
+                if (key === "name") return;
+                metric = key.split("_")[0];
+                year = key.split("_")[1];
+                if ($.inArray(metric, metrics)>-1 && 
+                        $.inArray(year, years)>-1) {
+                    table += "<td>"+value[i]+"</td>";
+                }
+            });
+            table += "</tr>";
+        }
+        table += "</table>";
+        table += "</div>";
+        return table;
+    }
+
+    function display(div) {
+        var table_id = "companies_activity";
+        html = displaySelectors();
+        html += displayTable(table_id);
+        $("#"+div).html(html);
+        addTableSortable(table_id);
+    }
+
+    CompaniesActivity.display = function() {
+        var mark = "CompaniesActivity";
         var divs = $("."+mark);
         if (divs.length > 0) {
             var unique = 0;
@@ -153,16 +196,16 @@ var CompaniesTable = {};
         // Dropdown remains opened
         $('.dropdown-menu').on('click', function(e) {
             if ($(this).hasClass('dropdown-menu-form')) {
-            e.stopPropagation();
+                e.stopPropagation();
             }
         });
     };
 
-    CompaniesTable.build = function() {
-        loadActivity(CompaniesTable.display);
+    CompaniesActivity.build = function() {
+        loadActivity(CompaniesActivity.display);
     };
 })();
 
 Loader.data_ready(function() {
-    CompaniesTable.build();
+    CompaniesActivity.build();
 });
