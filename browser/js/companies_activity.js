@@ -26,10 +26,10 @@ var CompaniesActivity = {};
 
 (function() {
 
-    var activity_json = "data/json/scm-companies-activity.json";
+    var activity_json = "data/json/companies-activity.json";
     var activity = null;
-    var default_metrics = ['commits'];
-    var default_years = ['all','2014'];
+    var default_metrics = ['commits']; // defined in HTML
+    var default_years = ['all','2014']; // defined in HTML
     var table_id = "companies_activity";
 
     function loadActivity (cb) {
@@ -51,8 +51,16 @@ var CompaniesActivity = {};
 
     function displaySelectors() {
         selectors = "<form id='form_selectors'>\n";
-        years = ['2014','2013','2012','all'];
-        metrics = ['commits','actions','authors'];
+        var years = [], metrics = [];
+        $.each(activity, function(key, value) {
+            if (key === "name") return;
+            metric = key.split("_")[0];
+            year = key.split("_")[1];
+            if (year === undefined) year = "all";
+            if ($.inArray(year, years) === -1) years.push(year);
+            if ($.inArray(metric, metrics) === -1) metrics.push(metric);
+
+        });
 
         // Years selector
         selectors += '<div class="dropdown pull-left">';
@@ -88,7 +96,7 @@ var CompaniesActivity = {};
     }
 
     function addTableSortable(id) {
-        // Adding sorting capability for BS3
+        // Adding sorting capability for tables in BS3
         $.extend($.tablesorter.themes.bootstrap, {
             // these classes are added to the table. To see other table classes available,
             // look here: http://twitter.github.com/bootstrap/base-css.html#tables
@@ -163,15 +171,16 @@ var CompaniesActivity = {};
         table += "<thead>";
         // First columns should be pos, name
         total = activity['name'].length;
-        table += "<th></th>";
+        table += "<th class='filter-false'></th>";
         table += "<th>Affiliation</th>";
         $.each(activity, function(key, value) {
             if (key === "name") return;
-            metric = key.split("_")[0];
-            year = key.split("_")[1];
+            var metric = key.split("_")[0];
+            var year = key.split("_")[1];
+            if (year === undefined) year = "all";
             if ($.inArray(metric, metrics)>-1 && 
                 $.inArray(year, years)>-1) {
-                table += "<th>"+key+"</th>";
+                table += "<th class='filter-false'>"+key+"</th>";
             }
         });
         table += "</thead>";
@@ -180,11 +189,14 @@ var CompaniesActivity = {};
             table += "<tr>";
             // First column should be pos, name
             table += "<td>"+(++pos)+"</td>";
-            table += "<td>"+activity['name'][i]+"</td>";
+            item = activity['name'][i];
+            // Specific for companies but easy to change
+            table += "<td><a href='company.html?company="+item+"'>"+item+"</a></td>";
             $.each(activity, function(key, value) {
                 if (key === "name") return;
                 metric = key.split("_")[0];
                 year = key.split("_")[1];
+                if (year === undefined) year = "all";
                 if ($.inArray(metric, metrics)>-1 && 
                         $.inArray(year, years)>-1) {
                     table += "<td>"+value[i]+"</td>";
@@ -212,6 +224,10 @@ var CompaniesActivity = {};
             var unique = 0;
             $.each(divs, function(id, div) {
                 div.id = mark + (unique++);
+                var years_init = $(this).data('years_init');
+                if (years_init) default_years = years_init.split(",");
+                var metrics_init = $(this).data('metrics_init');
+                if (metrics_init) default_metrics = metrics_init.split(",");
                 display(div.id);
             });
         }
